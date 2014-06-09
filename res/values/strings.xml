@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">What\'s My Luck?</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_help">Help</string>
+    <string name="action_about">About</string>
+    <string name="main_tagline">Speak your question, then shake to get your prediction!</string>
+    <string name="btn_predict">Get another prediction</string>
+
+</resources>
