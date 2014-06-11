@@ -24,6 +24,7 @@ public class MainActivity extends ActionBarActivity implements
 
 	TextView tv_display;
 	Button btn_predict;
+	TextView tv;
 	
 	private boolean predicted = false;
 
@@ -75,6 +76,7 @@ public class MainActivity extends ActionBarActivity implements
 
 		this.tv_display = (TextView) findViewById(R.id.tv_display);
 		this.btn_predict = (Button) findViewById(R.id.btn_predict);
+		this.tv = (TextView) findViewById(R.id.textView1);
 
 		return null;
 
@@ -112,6 +114,8 @@ public class MainActivity extends ActionBarActivity implements
 			this.toast("maybe not " + toss.getDiffPerc() + "%");
 
 		}
+		
+		this.tv.setText(toss.getResult());
 
 	}
 	

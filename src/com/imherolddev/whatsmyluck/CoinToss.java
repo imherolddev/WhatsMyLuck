@@ -91,12 +91,12 @@ public class CoinToss {
 
 		if (this.positive > this.negative) {
 
-			this.diffPerc = ((double) (this.positive - this.negative) / this.RUN_TIMES)
+			this.diffPerc = ((double) this.positive / this.RUN_TIMES)
 					* this.PERCENT;
 
 		} else {
 
-			this.diffPerc = ((double) (this.negative - this.positive) / this.RUN_TIMES)
+			this.diffPerc = ((double) this.negative / this.RUN_TIMES)
 					* this.PERCENT;
 
 		}
