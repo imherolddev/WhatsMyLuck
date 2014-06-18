@@ -7,5 +7,19 @@
     <string name="action_about">About</string>
     <string name="main_tagline">Speak your question, then shake to get your prediction!</string>
     <string name="btn_predict">Get another prediction</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string-array name="accuracy">
+        <item >High</item>
+        <item >Medium</item>
+        <item >Low</item>
+    </string-array>
+    <integer-array name="accuracy_int">
+        <item >300</item>
+        <item >100</item>
+        <item >50</item>
+    </integer-array>
+        <string name="accuracy">Accuracy</string>
+        <string name="accuracy_summary">Choose the accuracy of the prediction</string>
 
 </resources>

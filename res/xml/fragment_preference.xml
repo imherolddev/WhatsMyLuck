@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <ListPreference
+        android:defaultValue="100"
+        android:entries="@array/accuracy"
+        android:entryValues="@array/accuracy"
+        android:key="@string/accuracy"
+        android:summary="@string/accuracy_summary"
+        android:title="@string/accuracy" android:persistent="true"/>
+
+</PreferenceScreen>

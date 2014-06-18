@@ -1,10 +1,14 @@
 package com.imherolddev.whatsmyluck;
 
+import android.app.FragmentManager;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
@@ -12,21 +16,26 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.imherolddev.whatsmyluck.dialogs.StartupDialog;
+import com.imherolddev.whatsmyluck.preferences.SettingsActivity;
 
 public class MainActivity extends ActionBarActivity implements
 		SensorEventListener {
 
 	private SensorManager sensorManager;
-	private CoinToss toss = new CoinToss();
+	private CoinToss toss;
 
 	TextView tv_display;
 	Button btn_predict;
-	TextView tv;
-	
+	StartupDialog dialog;
+	Button accept;
 	private boolean predicted = false;
+	SharedPreferences sharedPrefs;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +48,14 @@ public class MainActivity extends ActionBarActivity implements
 		}
 
 		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+
+		sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+		if (!sharedPrefs.getBoolean("isAccepted", false)) {
+			dialog = new StartupDialog();
+			FragmentManager fm = getFragmentManager();
+			dialog.show(fm, "Startup");
+		}
 
 	}
 
@@ -58,32 +75,41 @@ public class MainActivity extends ActionBarActivity implements
 		switch (item.getItemId()) {
 
 		case R.id.action_help:
-			break;
+			return true;
 
 		case R.id.action_about:
-			break;
+			return true;
 
 		case R.id.action_settings:
-			break;
+			Intent settings = new Intent(this, SettingsActivity.class);
+			startActivity(settings);
+			return true;
+
+		default:
+			return super.onOptionsItemSelected(item);
 
 		}
 
-		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
 	public View onCreatePanelView(int featureId) {
 
+		if (!sharedPrefs.getBoolean("isAccepted", false)) {
+			dialog.getDialog().getWindow()
+					.addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
+			dialog.setCancelable(false);
+		}
 		this.tv_display = (TextView) findViewById(R.id.tv_display);
 		this.btn_predict = (Button) findViewById(R.id.btn_predict);
-		this.tv = (TextView) findViewById(R.id.textView1);
-
 		return null;
 
 	}
 
 	@Override
 	public void onResume() {
+
+		toss = new CoinToss(this);
 
 		super.onResume();
 		// register this class as a listener for the orientation and
@@ -114,16 +140,14 @@ public class MainActivity extends ActionBarActivity implements
 			this.toast("maybe not " + toss.getDiffPerc() + "%");
 
 		}
-		
-		this.tv.setText(toss.getResult());
 
 	}
-	
+
 	public void predictAgain(View v) {
-		
+
 		this.predicted = false;
 		this.btn_predict.setVisibility(View.GONE);
-		
+
 	}
 
 	/**
@@ -181,7 +205,7 @@ public class MainActivity extends ActionBarActivity implements
 		float accelationSquareRoot = (x * x + y * y + z * z)
 				/ (SensorManager.GRAVITY_EARTH * SensorManager.GRAVITY_EARTH);
 
-		if (accelationSquareRoot >= 8) {
+		if (accelationSquareRoot >= 5) {
 
 			return true;
 

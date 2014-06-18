@@ -1,0 +1,13 @@
+This is a test of the TextView:
+
+Please read carefully and consider the consequences, I would like to inform you that "What's my Luck," is only a game and cannot be held responsible for any choices you choose to make based on the suggestions given.
+
+When using this app, keep in mind, while it is an advanced process of determining an outcome, there is no actual way, proven, to predict the future. Please use caution and common sense in getting predictions.
+
+imherolddev will not be held liable for answers that are given, as they are generated based on probability.
+    
+This is some more random text to see if I can get this stupid TextView to scroll...
+    
+scroll...
+    
+Is it scrolling?

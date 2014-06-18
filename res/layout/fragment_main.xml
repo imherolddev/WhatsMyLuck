@@ -30,12 +30,4 @@
         android:text="@string/btn_predict"
         android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="TextView" />
-
 </RelativeLayout>
