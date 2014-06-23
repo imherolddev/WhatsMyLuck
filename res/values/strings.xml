@@ -4,22 +4,38 @@
     <string name="app_name">What\'s My Luck?</string>
     <string name="action_settings">Settings</string>
     <string name="action_help">Help</string>
-    <string name="action_about">About</string>
-    <string name="main_tagline">Speak your question, then shake to get your prediction!</string>
+    <string name="action_about">About Us</string>
+    <string name="main_tagline">Think of your question, then shake to get your prediction!</string>
     <string name="btn_predict">Get another prediction</string>
     <string name="title_activity_settings">SettingsActivity</string>
-    <string name="hello_world">Hello world!</string>
+
     <string-array name="accuracy">
-        <item >High</item>
-        <item >Medium</item>
-        <item >Low</item>
+        <item>High</item>
+        <item>Medium</item>
+        <item>Low</item>
     </string-array>
-    <integer-array name="accuracy_int">
-        <item >300</item>
-        <item >100</item>
-        <item >50</item>
-    </integer-array>
-        <string name="accuracy">Accuracy</string>
-        <string name="accuracy_summary">Choose the accuracy of the prediction</string>
+
+    <string name="accuracy">Accuracy</string>
+    <string name="accuracy_summary">Choose how accurate the prediction will be</string>
+    <string name="action_agreement">View agreement</string>
+    <string name="predicted">Please press \"Get another prediction\"</string>
+    <string name="support">support@imherolddev.com</string>
+    <string name="website"><a href="http://www.imherolddev.com">imherolddev website</a></string>
+    <string name="other_apps"><a href="https://play.google.com/store/apps/developer?id=imherolddev">imherolddev apps</a></string>
+    <string name="help">Help</string>
+    <string name="about">About</string>
+
+    <string-array name="positive_answers">
+        <item>I\'m positively... unsure</item>
+        <item>Somewhat likely</item>
+        <item>Seems likely</item>
+        <item>I will say, YES!</item>
+    </string-array>
+    <string-array name="negative_answers">
+        <item>I\'m not so sure...</item>
+        <item>Somewhat unlikely</item>
+        <item>Seems unlikely</item>
+        <item>I will say, NO!</item>
+    </string-array>
 
 </resources>

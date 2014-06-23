@@ -25,7 +25,11 @@
         </activity>
         <activity
             android:name="com.imherolddev.whatsmyluck.preferences.SettingsActivity"
-            android:label="@string/title_activity_settings" >
+            android:label="@string/title_activity_settings"
+            android:parentActivityName="con.imherolddev.whatsmyluck.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.imherolddev.whatsmyluck.MainActivity" />
         </activity>
     </application>
 

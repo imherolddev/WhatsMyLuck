@@ -6,6 +6,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+/**
+ * Get a randomly generated positive or negative result from coin flips<br>
+ * Recall the difference and the difference percentage<br>
+ * 
+ * @author imherolddev
+ * 
+ */
 public class CoinToss {
 
 	private final int PERCENT = 100;
@@ -15,11 +22,19 @@ public class CoinToss {
 	private int headsCount;
 	private int tailsCount;
 	private boolean sideCoin;
+	private int difference;
 	private double diffPerc;
+	private int deviation;
 
 	private Context context;
 	private SharedPreferences sharedPrefs;
 
+	/**
+	 * Constructor to pass context for preferences
+	 * 
+	 * @param context
+	 *            - MainActivity context
+	 */
 	public CoinToss(Context context) {
 
 		this.context = context;
@@ -30,22 +45,30 @@ public class CoinToss {
 
 	Random random = new Random();
 
+	/**
+	 * Flip a number of coins based on accuracy to find deviation<br>
+	 * <ul>
+	 * <li>"High" = 1_000_000 flips</li>
+	 * <li>"Medium" = 10_000 flips</li>
+	 * <li>"Low" = 1_000 flips</li>
+	 * </ul>
+	 */
 	public void flip() {
 
 		if (sharedPrefs.getString(context.getString(R.string.accuracy),
 				"Medium").equals("Medium")) {
 
-			this.FLIP_TIMES = 100;
+			this.FLIP_TIMES = 10000;
 
 		} else if (sharedPrefs.getString(context.getString(R.string.accuracy),
 				"Medium").equals("Low")) {
 
-			this.FLIP_TIMES = 10;
+			this.FLIP_TIMES = 1000;
 
 		} else if (sharedPrefs.getString(context.getString(R.string.accuracy),
 				"Medium").equals("High")) {
 
-			this.FLIP_TIMES = 1000;
+			this.FLIP_TIMES = 1000000;
 
 		}
 
@@ -69,24 +92,45 @@ public class CoinToss {
 
 	}
 
-	public int getDiffPerc() {
+	/**
+	 * Get the difference
+	 * 
+	 * @return difference - greater minus the lesser
+	 */
+	public int getDifference() {
 
-		if (this.headsCount > this.tailsCount) {
+		if (this.getAffirmation()) {
 
-			this.diffPerc = ((double) this.headsCount / this.FLIP_TIMES)
-					* this.PERCENT;
+			this.difference = this.headsCount - (this.FLIP_TIMES / 2);
 
 		} else {
 
-			this.diffPerc = ((double) this.tailsCount / this.FLIP_TIMES)
-					* this.PERCENT;
+			this.difference = this.tailsCount - (this.FLIP_TIMES / 2);
 
 		}
 
-		return (int) this.diffPerc;
+		return this.difference;
 
 	}
 
+	/**
+	 * Get the percentage of the difference
+	 * 
+	 * @return - int formated percentage of the difference
+	 */
+	public double getDiffPerc() {
+
+		this.diffPerc = ((double) this.difference / (this.FLIP_TIMES / 2)) * this.PERCENT;
+		
+		return this.diffPerc;
+
+	}
+
+	/**
+	 * Get the affirmation, positive or negative
+	 * 
+	 * @return - boolean if heads greater than tails
+	 */
 	public boolean getAffirmation() {
 
 		if (this.headsCount > this.tailsCount) {
@@ -98,6 +142,20 @@ public class CoinToss {
 			return false;
 
 		}
+
+	}
+
+	/**
+	 * Get the standard deviation
+	 * 
+	 * @return deviation - the standard deviation
+	 */
+	public int getDeviation() {
+
+		this.deviation = (int) Math
+				.sqrt((double) (Math.pow(this.difference, 2) / 2));
+
+		return this.deviation;
 
 	}
 

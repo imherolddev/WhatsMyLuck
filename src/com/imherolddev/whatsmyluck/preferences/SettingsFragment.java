@@ -5,6 +5,11 @@ import com.imherolddev.whatsmyluck.R;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 
+/**
+ * 
+ * @author imherolddev
+ *
+ */
 public class SettingsFragment extends PreferenceFragment {
 	
 	@Override

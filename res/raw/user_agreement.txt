@@ -1,13 +1,12 @@
-This is a test of the TextView:
+Please read this full agreement before accepting.
 
-Please read carefully and consider the consequences, I would like to inform you that "What's my Luck," is only a game and cannot be held responsible for any choices you choose to make based on the suggestions given.
+You have installed "What's My Luck," by imherolddev, which offers predictions to your yes or no questions. The answers provided are purely random choice, and imherolddev cannot be held liable for what advice it may give. While this is based on statistical anomaly, again the answers are simply a randomly chosen String. This agreement is binding to the owner of the device, and the content is applicable to anyone who may use it. It is strongly recommended that anyone who may use this application be directed to read this agreement. Again, imherolddev, will be held harmless to any decisions made based on the answers this app provides.
 
-When using this app, keep in mind, while it is an advanced process of determining an outcome, there is no actual way, proven, to predict the future. Please use caution and common sense in getting predictions.
+By clicking agree, you will be able to begin receiving predictions, this agreement will not appear again unless you choose to view it from the application settings menu.  Upon review of this agreement you will be prompted to accept or decline once again, should you decline the app will be exited, however, the fact that this agreement must be accepted before use, you will still be bound by the terms of this agreement, should any decisions be made post use. Should you decline the agreement, it would be recommended to further uninstall the app, unless you plan to review and accept the agreement.
 
-imherolddev will not be held liable for answers that are given, as they are generated based on probability.
-    
-This is some more random text to see if I can get this stupid TextView to scroll...
-    
-scroll...
-    
-Is it scrolling?
+What's My Luck
+-imherolddev
+
+To review this agreement at a later time, navigate to the options menu and select "View Agreement"
+
+Accept to agree to these terms, or decline to be exited from the app.

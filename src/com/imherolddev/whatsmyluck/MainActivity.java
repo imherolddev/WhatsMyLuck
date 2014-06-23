@@ -1,6 +1,5 @@
 package com.imherolddev.whatsmyluck;
 
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.hardware.Sensor;
@@ -10,6 +9,8 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -24,18 +25,28 @@ import android.widget.Toast;
 import com.imherolddev.whatsmyluck.dialogs.StartupDialog;
 import com.imherolddev.whatsmyluck.preferences.SettingsActivity;
 
+/**
+ * 
+ * @author imherolddev
+ * 
+ */
 public class MainActivity extends ActionBarActivity implements
-		SensorEventListener {
+		SensorEventListener, OnBackStackChangedListener {
 
 	private SensorManager sensorManager;
 	private CoinToss toss;
 
-	TextView tv_display;
-	Button btn_predict;
-	StartupDialog dialog;
-	Button accept;
+	private TextView tv_tagline;
+	private Button btn_predict;
+	private StartupDialog dialog;
+	private SharedPreferences sharedPrefs;
+	private FragmentManager fm;
+
+	private Fragment aboutFrag;
+	private Fragment helpFrag;
+
 	private boolean predicted = false;
-	SharedPreferences sharedPrefs;
+	private int shaken;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +61,15 @@ public class MainActivity extends ActionBarActivity implements
 		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 
 		sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+		fm = this.getSupportFragmentManager();
+		dialog = new StartupDialog();
 
 		if (!sharedPrefs.getBoolean("isAccepted", false)) {
-			dialog = new StartupDialog();
-			FragmentManager fm = getFragmentManager();
 			dialog.show(fm, "Startup");
 		}
+
+		fm.addOnBackStackChangedListener(this);
+		this.shouldDisplayHomeUp();
 
 	}
 
@@ -74,16 +88,29 @@ public class MainActivity extends ActionBarActivity implements
 		// as you specify a parent activity in AndroidManifest.xml.
 		switch (item.getItemId()) {
 
+		case R.id.home:
+			if (fm.getBackStackEntryCount() > 0) {
+				fm.popBackStack();
+			}
 		case R.id.action_help:
+			helpFrag = new HelpFragment();
+			fm.beginTransaction().add(R.id.container, helpFrag)
+					.addToBackStack(null).commit();
 			return true;
 
 		case R.id.action_about:
+			aboutFrag = new AboutFragment();
+			fm.beginTransaction().add(R.id.container, aboutFrag)
+					.addToBackStack(null).commit();
 			return true;
 
 		case R.id.action_settings:
 			Intent settings = new Intent(this, SettingsActivity.class);
 			startActivity(settings);
 			return true;
+
+		case R.id.action_agreement:
+			dialog.show(fm, getString(R.string.action_agreement));
 
 		default:
 			return super.onOptionsItemSelected(item);
@@ -100,7 +127,7 @@ public class MainActivity extends ActionBarActivity implements
 					.addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
 			dialog.setCancelable(false);
 		}
-		this.tv_display = (TextView) findViewById(R.id.tv_display);
+		this.tv_tagline = (TextView) findViewById(R.id.tv_display);
 		this.btn_predict = (Button) findViewById(R.id.btn_predict);
 		return null;
 
@@ -109,14 +136,14 @@ public class MainActivity extends ActionBarActivity implements
 	@Override
 	public void onResume() {
 
-		toss = new CoinToss(this);
-
 		super.onResume();
 		// register this class as a listener for the orientation and
 		// accelerometer sensors
 		sensorManager.registerListener(this,
 				sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
 				SensorManager.SENSOR_DELAY_NORMAL);
+
+		toss = new CoinToss(this);
 
 	}
 
@@ -131,15 +158,10 @@ public class MainActivity extends ActionBarActivity implements
 
 		this.toss.flip();
 
-		if (toss.getAffirmation()) {
+		Predictor p = new Predictor(this, this.toss.getAffirmation(),
+				toss.getDifference(), toss.getDiffPerc());
 
-			this.toast("sure thing " + toss.getDiffPerc() + "%");
-
-		} else {
-
-			this.toast("maybe not " + toss.getDiffPerc() + "%");
-
-		}
+		this.toast(p.getPrediction());
 
 	}
 
@@ -147,6 +169,7 @@ public class MainActivity extends ActionBarActivity implements
 
 		this.predicted = false;
 		this.btn_predict.setVisibility(View.GONE);
+		this.tv_tagline.setVisibility(View.VISIBLE);
 
 	}
 
@@ -170,16 +193,23 @@ public class MainActivity extends ActionBarActivity implements
 	@Override
 	public void onSensorChanged(SensorEvent event) {
 
-		if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+		if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER
+				&& getAccelerometer(event)) {
 
 			if (!predicted) {
 
-				if (getAccelerometer(event)) {
+				predicted = true;
+				shaken = 0;
+				this.flipCoins();
+				this.tv_tagline.setVisibility(View.INVISIBLE);
+				this.btn_predict.setVisibility(View.VISIBLE);
 
-					predicted = true;
-					this.flipCoins();
-					this.btn_predict.setVisibility(View.VISIBLE);
+			} else {
 
+				shaken++;
+
+				if (shaken == 5) {
+					this.toast(getString(R.string.predicted));
 				}
 
 			}
@@ -205,7 +235,7 @@ public class MainActivity extends ActionBarActivity implements
 		float accelationSquareRoot = (x * x + y * y + z * z)
 				/ (SensorManager.GRAVITY_EARTH * SensorManager.GRAVITY_EARTH);
 
-		if (accelationSquareRoot >= 5) {
+		if (accelationSquareRoot >= 6) {
 
 			return true;
 
@@ -220,6 +250,24 @@ public class MainActivity extends ActionBarActivity implements
 
 		Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
 
+	}
+
+	@Override
+	public void onBackStackChanged() {
+		shouldDisplayHomeUp();
+	}
+
+	public void shouldDisplayHomeUp() {
+		// Enable Up button only if there are entries in the back stack
+		boolean canback = getSupportFragmentManager().getBackStackEntryCount() > 0;
+		getSupportActionBar().setDisplayHomeAsUpEnabled(canback);
+	}
+
+	@Override
+	public boolean onSupportNavigateUp() {
+		// This method is called when the up button is pressed.
+		getSupportFragmentManager().popBackStack();
+		return true;
 	}
 
 }

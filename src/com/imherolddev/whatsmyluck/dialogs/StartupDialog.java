@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
+import android.support.v4.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -17,6 +17,11 @@ import android.widget.TextView;
 
 import com.imherolddev.whatsmyluck.R;
 
+/**
+ * 
+ * @author imherolddev
+ *
+ */
 public class StartupDialog extends DialogFragment implements ScrollViewListener {
 
 	private AlertDialog dialog;
@@ -25,14 +30,16 @@ public class StartupDialog extends DialogFragment implements ScrollViewListener 
 	private ScrollViewExt scroll;
 	private SharedPreferences sharedPrefs;
 
-	/*
-	 * public StartupDialog() {
-	 * 
-	 * }
+	/**
+	 * No arg constructor
 	 */
+	 public StartupDialog() {
+		 //Empty
+	 }
+	 
 
 	@Override
-	public Dialog onCreateDialog(Bundle savedInstanceState) {
+	public AlertDialog onCreateDialog(Bundle savedInstanceState) {
 
 		AlertDialog.Builder startupDialog = new AlertDialog.Builder(
 				getActivity());
@@ -94,6 +101,7 @@ public class StartupDialog extends DialogFragment implements ScrollViewListener 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 
+						editor.putBoolean("isAccepted", false).apply();
 						getActivity().finish();
 
 					}

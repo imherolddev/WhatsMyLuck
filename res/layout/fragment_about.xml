@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/whatsmyluck_bg" >
+
+    <TextView
+        android:id="@+id/tv_web"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="@string/website"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/white"
+        android:textColorLink="@color/white" />
+
+    <TextView
+        android:id="@+id/tv_support"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tv_web"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="42dp"
+        android:autoLink="email"
+        android:text="@string/support"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/white"
+        android:textColorLink="@color/white" />
+
+    <TextView
+        android:id="@+id/tv_apps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_web"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="44dp"
+        android:text="@string/other_apps"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/white"
+        android:textColorLink="@color/white" />
+
+</RelativeLayout>

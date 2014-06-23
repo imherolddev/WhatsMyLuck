@@ -1,0 +1,19 @@
+What's My Luck
+
+by imherolddev
+
+How to use:
+
+-Simply think of a yes or no question that you would like a prediction for
+-Shake the device to start the prediction process
+-Your result will be displayed as a Toast
+-To receive another prediction you must click the button
+-Repeat the process as desired
+
+(You may choose the accuracy level in the settings)
+
+How it works:
+
+What's My Luck uses simulated coin flips, and the difference between heads and tails to see if a statistical anomaly has occured. Based on the ammount of difference, your prediction will be a higher or lower degree of positeve or negative. Changing the accuracy in the settings will affect how likely it is to see an anomaly in your results. The default setting is for Medium accuracy, while this is recommended, should you want to see true anomalies you should set the accuracy to high.
+
+Should you need further assistance or to report bugs, navigate to the "About Us" page and send an email, or visit the Play Store link, and leave feedback.

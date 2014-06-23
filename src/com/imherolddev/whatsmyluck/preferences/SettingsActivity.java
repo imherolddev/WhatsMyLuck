@@ -8,6 +8,11 @@ import android.view.MenuItem;
 
 import com.imherolddev.whatsmyluck.MainActivity;
 
+/**
+ * 
+ * @author imherolddev
+ *
+ */
 public class SettingsActivity extends PreferenceActivity {
 
 	@Override
@@ -38,6 +43,9 @@ public class SettingsActivity extends PreferenceActivity {
 
 	}
 
+	/**
+	 * Handle homeAsUp click, send user to MainActivity and clear top
+	 */
 	private void gotoHome() {
 
 		Intent home = new Intent(getApplicationContext(), MainActivity.class);
@@ -47,12 +55,14 @@ public class SettingsActivity extends PreferenceActivity {
 
 	}
 
+	/**
+	 * Enable homeAsUp navigation
+	 */
 	private void setupActionBar() {
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 
-			android.app.ActionBar actionBar = getActionBar();
-			actionBar.setDisplayHomeAsUpEnabled(true);
+			getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		}
 
